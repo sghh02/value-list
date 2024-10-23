@@ -1,5 +1,9 @@
 {
   "title": "UBP",
   "first_page_main_text": "自分の価値観を知り\nそれに沿って悩みや目標に\n向き合ってみましょう",
-  "first_page_button_text": "進む"
+  "first_page_button_text": "進む",
+  "value_selection_page_title": "価値観リスト",
+  "value_selection_page_description_1": "ありのままの\n自分で正直に回答\nしてください。",
+  "value_selection_page_description_2": "自分にとって大事\nな価値観を選択\nしていきます。",
+  "value_selection_page_description_3": "最後に大事な価値\n観の中で1〜10位\nまでを選びます。"
 }

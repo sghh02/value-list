@@ -1,5 +1,9 @@
 {
   "title": "UBP",
-  "first_page_main_text": "Discover your values\nnand align them with your goals\nnand challenges.",
-  "first_page_button_text": "Next"
+  "first_page_main_text": "Discover your values\nand align them with your goals\nand challenges.",
+  "first_page_button_text": "Next",
+  "value_selection_page_title": "Value List",
+  "value_selection_page_description_1": "Please answer\nhonestly as\nyou truly are.",
+  "value_selection_page_description_2": "You will select\nthe values that are\nimportant to you.",
+  "value_selection_page_description_3": "Finally, choose\nyour top 10 most\nimportant values."
 }

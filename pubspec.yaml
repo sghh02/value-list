@@ -32,12 +32,8 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/human-img.png
-#  fonts:
-#    - family: CustomFont
-#      fonts:
-#        - asset: assets/fonts/custom_font.ttf
-#l10n:
-#  arb-dir: lib/l10n
-#  template-arb-file: app_en.arb
-#  output-localization-file: S.dart
-#  output-class: S
+    - assets/images/lamp.png
+    - assets/images/frame-1.png
+    - assets/images/frame-2.png
+    - assets/images/frame-3.png
+

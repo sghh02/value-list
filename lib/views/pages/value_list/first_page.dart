@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:valuelist/navigation/route_paths.dart';
 import 'package:valuelist/utils/assets.dart';
 import 'package:valuelist/utils/theme.dart';
 import 'package:valuelist/views/widgets/button.dart';
@@ -24,9 +26,9 @@ class FirstPage extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AppTheme.backgroundTopColor,
-                    AppTheme.backgroundIntermediateColor,
-                    AppTheme.backgroundBottomColor,
+                    AppColors.backgroundTopColor,
+                    AppColors.backgroundIntermediateColor,
+                    AppColors.backgroundBottomColor,
                   ],
                 ),
               ),
@@ -55,9 +57,9 @@ class FirstPage extends StatelessWidget {
                       label:
                           AppLocalizations.of(context).first_page_button_text,
                       onPressed: () {
-                        // TODO: 価値観リスト選定ページに遷移する処理
+                        context.go(RoutePaths.valueSelectionPage);
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
