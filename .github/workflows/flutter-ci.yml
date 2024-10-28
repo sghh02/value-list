@@ -1,0 +1,104 @@
+name: Flutter CI/CD
+
+# ワークフローのトリガー設定
+on:
+  # プッシュ時の自動実行設定
+  push:
+    branches:
+      - main    # メインブランチ
+      - develop # 開発ブランチ
+  
+  # プルリクエスト時の自動実行設定
+  pull_request:
+    branches:
+      - main    # メインブランチへのPR
+      - develop # 開発ブランチへのPR
+
+# 実行する処理の定義
+jobs:
+  build:
+    # 実行環境の指定（Ubuntu最新版）
+    runs-on: ubuntu-latest
+
+    steps:
+      # ステップ1: リポジトリのコードをチェックアウト
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # ステップ2: Flutterのセットアップ
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0' # Flutterのバージョンを指定
+          channel: 'stable'         # 安定版を使用
+        # セットアップに失敗したら後続の処理を実行しない
+        continue-on-error: false
+
+      # ステップ3: 依存パッケージのインストール
+      - name: Install Dependencies
+        run: flutter pub get
+        # パッケージのインストールに失敗したら中断
+        continue-on-error: false
+
+      # ステップ4: コードフォーマットのチェック
+      - name: Check Code Formatting
+        run: dart format --set-exit-if-changed lib/
+        # フォーマットエラーは警告として扱い、処理は続行
+        continue-on-error: true
+
+      # ステップ5: 静的コード解析の実行
+      - name: Run Static Code Analysis
+        run: flutter analyze
+        # 解析エラーは警告として扱い、処理は続行
+        continue-on-error: true
+
+      # ステップ6: ユニットテストの実行
+      - name: Run Unit Tests
+        run: flutter test
+        # テスト失敗は重大なエラーとして扱う
+        continue-on-error: false
+
+      # ステップ7: デバッグ用APKのビルド
+      - name: Build Android Debug APK
+        run: flutter build apk --debug
+        # ビルド失敗は重大なエラーとして扱う
+        continue-on-error: false
+
+      # ステップ8: ビルド成果物の保存
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+        # アップロードの失敗は警告として扱う
+        continue-on-error: true
+
+      # ステップ9: キャッシュの保存（次回ビルドの高速化）
+      - name: Cache Build Files
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            build/
+          # キャッシュのキーを設定（OSとpubspec.lockのハッシュ値を使用）
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+        continue-on-error: true
+
+      # ステップ10: エラー発生時のSlack通知（オプション）
+      - name: Notify on Failure
+        if: failure() # 前のステップが失敗した場合のみ実行
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,action,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        # 通知の失敗は警告として扱う
+        continue-on-error: true
+
+# 環境変数の設定（必要に応じて）
+env:
+  FLUTTER_VERSION: '3.19.0'
+  JAVA_VERSION: '12.x'
