@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:valuelist/utils/assets.dart';
 
-class CustomHeader extends StatelessWidget with PreferredSizeWidget {
+class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
   const CustomHeader({super.key});
 
   @override

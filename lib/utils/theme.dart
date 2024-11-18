@@ -4,7 +4,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
-      elevation: 4.0,
+      elevation: 4,
       shadowColor: AppColors.backgroundBottomColor,
       centerTitle: true,
       titleTextStyle: TextStyle(
